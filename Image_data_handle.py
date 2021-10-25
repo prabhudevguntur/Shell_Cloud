@@ -9,7 +9,7 @@ def image_sampler(train_image_dir, train_df_list):
     for df in train_df_list:
         row_list = []
         for i,j in zip(df['DATE (MM/DD)'],df['MST']):
-            print(i,j)
+            # print(i,j)
 
             if int(i.split('/')[0]) < 10:
                 a = '0'+ i.split('/')[0]

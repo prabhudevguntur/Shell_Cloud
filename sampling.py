@@ -6,6 +6,7 @@ from scipy.stats.stats import pearsonr
 
 def sampler(train_tabular, test_tabular):
 
+    print('Sampling similar data to test')
     test_tabular = tab_clean(test_tabular)
 
     compare_cols = ['Global CMP22 (vent/cor) [W/m^2]', 'Direct sNIP [W/m^2]',
@@ -24,15 +25,15 @@ def sampler(train_tabular, test_tabular):
 
     df_list = []
 
-    for i in range(0, len(train_df) - overlap, nrows - overlap):
+    for i in range(0, len(train_df) - overlap): # range(0, len(train_df) - overlap, nrows - overlap) for non lstm
 
         # if  (train_sample.shape[0] < nrows) or (train_sample.index[-1]+120 > len(train_df)):
         #     continue
         try:
-            train_sample =  train_df.iloc[i: i + nrows]
+            train_sample = train_df.iloc[i: i + nrows]
             correlation = pearsonr(train_sample['Total Cloud Cover [%]'].values,test_df['Total Cloud Cover [%]'].values)
-            if correlation[0] > 0.6:
-                df_list.append(train_tabular.iloc[i: i + nrows + 121])
+            if correlation[0] > 0.8:
+                df_list.append(train_tabular.iloc[i: i + nrows + 120])
         except:
             continue
 
